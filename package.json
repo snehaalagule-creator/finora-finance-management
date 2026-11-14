@@ -1,0 +1,10 @@
+{
+  "name": "finance-management-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix backend start",
+    "dev:frontend": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000"
+  }
+}

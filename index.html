@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight-purple">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finora | Finance Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="theme-switcher">
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Change Theme" title="Change Theme" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu">
+      <span aria-hidden="true">🌙</span>
+    </button>
+    <div id="themeMenu" class="theme-menu hidden" role="group" aria-labelledby="themeToggle">
+      <p class="theme-menu-title">Choose your theme</p>
+      <button class="theme-option" type="button" data-theme-choice="midnight-purple" aria-pressed="false">
+        <span class="theme-preview preview-midnight" aria-hidden="true"><span>🌙</span></span>
+        <span class="theme-option-copy"><strong>Midnight Purple</strong></span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+      <button class="theme-option" type="button" data-theme-choice="minimalist-beige" aria-pressed="false">
+        <span class="theme-preview preview-beige" aria-hidden="true"><span>☀️</span></span>
+        <span class="theme-option-copy"><strong>Minimalist Beige</strong></span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+      <button class="theme-option" type="button" data-theme-choice="rose-burgundy" aria-pressed="false">
+        <span class="theme-preview preview-rose" aria-hidden="true"><span>🌹</span></span>
+        <span class="theme-option-copy"><strong>Rose &amp; Burgundy</strong></span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+      <p id="themeStatus" class="theme-status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- LOGIN AND SIGNUP -->
+  <section id="authPage" class="auth-page">
+    <div class="auth-card">
+      <div class="brand large-brand">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="vertical-align:middle;margin-right:6px">
+          <rect width="32" height="32" rx="10" fill="url(#finora-mark-auth)"/>
+          <circle cx="16" cy="16" r="12.5" stroke="var(--on-primary)" stroke-opacity=".28"/>
+          <path d="M10 22V10h12M10 15.5h8" stroke="var(--on-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m14 21 4-4 3 2 4-6m-3 0h3v3" stroke="var(--on-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs><linearGradient id="finora-mark-auth" x1="3" y1="2" x2="29" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="var(--brand-gradient-start)"/><stop offset="1" stop-color="var(--brand-gradient-end)"/></linearGradient></defs>
+        </svg>
+        Finora
+      </div>
+      <p class="muted">Your money. Your future.</p>
+
+      <div class="auth-tabs">
+        <button id="loginTab" class="auth-tab active">Login</button>
+        <button id="signupTab" class="auth-tab">Sign Up</button>
+      </div>
+
+      <!-- STEP 1: Email -->
+      <form id="emailForm">
+        <h2 id="authTitle">Welcome back!</h2>
+        <p id="authDescription" class="muted">Enter your email to continue.</p>
+
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" placeholder="you@example.com" required autocomplete="email">
+
+        <button type="submit" id="emailSubmit" class="primary-btn full-btn">Continue</button>
+        <p id="authMessage" class="message" aria-live="polite"></p>
+      </form>
+
+      <!-- STEP 2: Name (signup only) + Password -->
+      <form id="passwordForm" class="hidden">
+        <h2 id="passwordTitle">Enter your password</h2>
+        <p id="passwordEmail" class="muted"></p>
+
+        <label for="authName" id="nameLabel" hidden>Full name</label>
+        <input id="authName" type="text" placeholder="Full name" hidden autocomplete="name">
+
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" placeholder="Enter password" minlength="8" required autocomplete="current-password">
+
+        <button type="submit" id="authSubmit" class="primary-btn full-btn">Login</button>
+        <button type="button" id="backToEmail" class="secondary-btn full-btn" style="margin-top:8px">← Back</button>
+        <p id="passwordMessage" class="message" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- MAIN APPLICATION -->
+  <div id="app" class="app hidden">
+
+    <aside class="sidebar">
+      <div class="brand">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="vertical-align:middle;margin-right:6px">
+          <rect width="32" height="32" rx="10" fill="url(#finora-mark-sidebar)"/>
+          <circle cx="16" cy="16" r="12.5" stroke="var(--on-primary)" stroke-opacity=".28"/>
+          <path d="M10 22V10h12M10 15.5h8" stroke="var(--on-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m14 21 4-4 3 2 4-6m-3 0h3v3" stroke="var(--on-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs><linearGradient id="finora-mark-sidebar" x1="3" y1="2" x2="29" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="var(--brand-gradient-start)"/><stop offset="1" stop-color="var(--brand-gradient-end)"/></linearGradient></defs>
+        </svg>
+        Finora
+      </div>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <button class="nav-item active" data-page="dashboard">Dashboard</button>
+        <button class="nav-item" data-page="transactions">Transactions</button>
+        <button class="nav-item" data-page="budgets">Budgets</button>
+        <button class="nav-item" data-page="goals">Savings Goals</button>
+        <button class="nav-item" data-page="reports">Reports</button>
+        <button class="nav-item" data-page="settings">Settings</button>
+      </nav>
+
+    </aside>
+
+    <main class="main-content">
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="page">
+        <div class="welcome-row">
+          <div>
+            <h1>Good to see you, <span id="welcomeName">there</span> 👋</h1>
+            <p class="muted">Here is your financial overview.</p>
+          </div>
+          <button class="primary-btn" data-action="add-transaction">
+            + Add transaction
+          </button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span>Total Balance</span><span class="stat-icon">◈</span></div>
+            <h2 id="totalBalance">₹0</h2>
+            <p class="muted">Income minus expenses</p>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Total Income</span><span class="stat-icon green">↗</span></div>
+            <h2 id="totalIncome" class="green-text">₹0</h2>
+            <p class="muted">Recorded income</p>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Total Expenses</span><span class="stat-icon red">↘</span></div>
+            <h2 id="totalExpenses" class="red-text">₹0</h2>
+            <p class="muted">Recorded spending</p>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Savings Rate</span><span class="stat-icon purple">%</span></div>
+            <h2 id="savingsRate">0%</h2>
+            <p class="muted">Income saved</p>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Income vs Expenses</h3>
+                <p class="muted">Based on your recorded transactions</p>
+              </div>
+            </div>
+            <div class="chart" id="overviewChart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Budget Overview</h3>
+                <p class="muted">Your spending limits</p>
+              </div>
+              <button class="text-btn" data-page="budgets">View all</button>
+            </div>
+            <div id="dashboardBudgets"></div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <h3>Recent Transactions</h3>
+              <p class="muted">Your latest financial activity</p>
+            </div>
+            <button class="text-btn" data-page="transactions">View all</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Transaction</th><th>Category</th><th>Date</th><th>Amount</th><th></th></tr>
+              </thead>
+              <tbody id="recentTransactions"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- TRANSACTIONS -->
+      <section id="transactions" class="page hidden">
+        <div class="section-intro">
+          <div class="transaction-actions">
+            <button class="primary-btn" id="showTransactionForm">+ Add transaction</button>
+            <button class="secondary-btn" id="openReceiptScanner">&#128248; Scan Receipt</button>
+            <button class="secondary-btn" id="openVoiceEntry">&#127908; Voice Entry</button>
+          </div>
+        </div>
+
+        <!-- RECEIPT SCANNER -->
+        <div id="receiptPanel" class="panel hidden" style="margin-bottom:22px;">
+          <h3 style="margin-bottom:8px;">&#128248; Scan your receipt</h3>
+          <p class="muted" style="margin-bottom:16px;">Take a photo of any bill or upload a receipt image.</p>
+          <label for="receiptImage">Choose receipt image
+            <input id="receiptImage" type="file" accept="image/*" capture="environment">
+          </label>
+          <img id="receiptPreview" class="hidden" alt="Receipt preview" style="max-width:100%;max-height:280px;margin-top:14px;border-radius:12px;border:1px solid var(--border);">
+          <p id="receiptMessage" class="message" aria-live="polite"></p>
+          <div class="form-actions" style="margin-top:16px;">
+            <button type="button" id="extractReceipt" class="primary-btn">Extract &amp; Review Transaction</button>
+            <button type="button" id="closeReceiptScanner" class="secondary-btn">Cancel</button>
+          </div>
+        </div>
+
+        <!-- VOICE ENTRY -->
+        <div id="voicePanel" class="panel hidden voice-panel">
+          <h3>Add transaction by voice</h3>
+          <p class="muted voice-instructions">Speak in English or Indian English, for example: “I spent 150 rupees on groceries today” or “I received 5000 rupees salary.”</p>
+          <div class="voice-controls">
+            <button type="button" id="startVoiceEntry" class="primary-btn voice-start-button"><span class="voice-mic-icon" aria-hidden="true">&#127897;</span> Start Listening</button>
+            <button type="button" id="stopVoiceEntry" class="secondary-btn hidden">Stop Listening</button>
+            <span id="voiceStatus" class="voice-status" role="status" aria-live="polite">Ready</span>
+          </div>
+          <div id="voiceListening" class="voice-listening hidden" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div id="voiceInputMeter" class="voice-input-meter hidden" role="meter" aria-label="Microphone input level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span id="voiceInputMeterFill"></span>
+          </div>
+          <p id="voiceInputHint" class="voice-input-hint hidden">Speak now. The meter should move when your microphone hears you.</p>
+          <p id="voiceMessage" class="message voice-message" aria-live="polite"></p>
+          <div id="voiceTranscriptPreview" class="voice-transcript hidden" aria-live="polite">
+            <strong>Recognized speech</strong>
+            <p id="voiceTranscriptText"></p>
+          </div>
+          <form id="voiceConfirmation" class="voice-confirmation hidden" novalidate>
+            <h4>Review before saving</h4>
+            <label>Original recognized speech
+              <textarea id="voiceTranscript" rows="2" required></textarea>
+            </label>
+            <div class="voice-fields">
+              <label>Transaction type
+                <select id="voiceType" required>
+                  <option value="">Select type</option>
+                  <option value="expense">Expense</option>
+                  <option value="income">Income</option>
+                </select>
+              </label>
+              <label>Description
+                <input id="voiceDescription" type="text" maxlength="100" placeholder="e.g. Maggi" required>
+              </label>
+              <label>Amount (&#8377;)
+                <input id="voiceAmount" type="number" min="0.01" step="0.01" placeholder="20" required>
+              </label>
+              <label>Category
+                <select id="voiceCategory" required>
+                  <option>Food</option><option>Groceries</option><option>Salary</option><option>Freelance</option><option>Transport</option>
+                  <option>Shopping</option><option>Bills</option><option>Health</option>
+                  <option>Education</option><option>Entertainment</option>
+                  <option>Investment</option><option>Other</option>
+                </select>
+              </label>
+              <label>Date
+                <input id="voiceDate" type="date" required>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button type="submit" id="saveVoiceTransaction" class="primary-btn">Save Transaction</button>
+              <button type="button" id="closeVoiceEntry" class="secondary-btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <form id="transactionForm" class="panel form-grid hidden">
+          <h3 class="form-title" id="transactionFormTitle">New transaction</h3>
+          <label>Type
+            <select id="transactionType" required>
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </label>
+          <label>Description
+            <textarea id="transactionDescription" placeholder="e.g. Grocery shopping, notes, anything..." required rows="3" style="resize:vertical;"></textarea>
+          </label>
+          <label>Amount (₹)
+            <input id="transactionAmount" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. ₹1,250.50" required>
+          </label>
+          <label>Category
+            <select id="transactionCategory" required>
+              <option>Food</option><option>Groceries</option><option>Salary</option><option>Freelance</option><option>Transport</option>
+              <option>Shopping</option><option>Bills</option><option>Health</option>
+              <option>Education</option><option>Entertainment</option>
+              <option>Investment</option><option>Other</option>
+            </select>
+          </label>
+          <label>Date
+            <input id="transactionDate" type="date" required>
+          </label>
+          <div class="form-actions">
+            <button class="primary-btn" type="submit">Save transaction</button>
+            <button class="secondary-btn" type="button" id="cancelTransaction">Cancel</button>
+          </div>
+        </form>
+        <div id="receiptOcrReview" class="receipt-ocr-review hidden">
+          <p id="receiptAmountSource" class="muted"></p>
+          <details id="receiptOcrDetails">
+            <summary>Review complete extracted receipt text</summary>
+            <pre id="receiptOcrText" class="receipt-ocr-text"></pre>
+          </details>
+        </div>
+        <p id="transactionMessage" class="message" aria-live="polite"></p>
+
+        <article class="panel">
+          <div class="filter-row">
+            <input id="transactionSearch" placeholder="Search transactions...">
+            <select id="transactionFilter">
+              <option value="all">All transactions</option>
+              <option value="income">Income only</option>
+              <option value="expense">Expenses only</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Transaction</th><th>Category</th><th>Date</th><th>Type</th><th>Amount</th><th>Action</th></tr>
+              </thead>
+              <tbody id="allTransactions"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- BUDGETS -->
+      <section id="budgets" class="page hidden">
+        <div class="section-intro"></div>
+        <form id="budgetForm" class="panel inline-form">
+          <label>Category
+            <select id="budgetCategory">
+              <option>Food</option><option>Transport</option><option>Shopping</option>
+              <option>Bills</option><option>Health</option><option>Education</option>
+              <option>Entertainment</option><option>Other</option>
+            </select>
+          </label>
+          <label>Monthly limit (₹)
+            <input id="budgetLimit" type="number" min="1" step="1" required>
+          </label>
+          <button class="primary-btn" type="submit">Save budget</button>
+        </form>
+        <div id="budgetList" class="cards-grid"></div>
+      </section>
+
+      <!-- SAVINGS GOALS -->
+      <section id="goals" class="page hidden">
+        <div class="section-intro"></div>
+        <form id="goalForm" class="panel inline-form">
+          <label>Goal name
+            <input id="goalName" placeholder="e.g. Buy a laptop" required>
+          </label>
+          <label>Target amount (₹)
+            <input id="goalTarget" type="number" min="1" required>
+          </label>
+          <label>Already saved (₹)
+            <input id="goalSaved" type="number" min="0" value="0" required>
+          </label>
+          <button class="primary-btn" type="submit">Add goal</button>
+        </form>
+        <div id="goalList" class="cards-grid"></div>
+      </section>
+
+      <!-- REPORTS -->
+      <section id="reports" class="page hidden">
+        <div class="section-intro"></div>
+        <div class="stats-grid">
+          <article class="stat-card"><p class="muted">Income</p><h2 id="reportIncome" class="green-text">₹0</h2></article>
+          <article class="stat-card"><p class="muted">Expenses</p><h2 id="reportExpenses" class="red-text">₹0</h2></article>
+          <article class="stat-card"><p class="muted">Net Savings</p><h2 id="reportSavings">₹0</h2></article>
+          <article class="stat-card"><p class="muted">Transactions</p><h2 id="reportCount">0</h2></article>
+        </div>
+        <article class="panel">
+          <h3>Spending by category</h3>
+          <p class="muted">Based on all recorded expenses.</p>
+          <div id="categoryChart" class="category-chart"></div>
+        </article>
+        <button id="exportBtn" class="secondary-btn">Export Transactions CSV</button>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="settings" class="page hidden">
+        <div class="section-intro"></div>
+        <form id="profileForm" class="panel settings-form">
+          <h3>Profile information</h3>
+          <label>Full name
+            <input id="profileName" required>
+          </label>
+          <label>Email
+            <input id="profileEmail" type="email" required>
+          </label>
+          <button class="primary-btn" type="submit">Save profile</button>
+          <p id="profileMessage" class="message" aria-live="polite"></p>
+        </form>
+        <article class="panel">
+          <h3>Demo data</h3>
+          <p class="muted">Reset this demo's transactions, budgets and goals.</p>
+          <button id="resetBtn" class="danger-btn">Reset demo data</button>
+        </article>
+      </section>
+
+      <footer>Finora Finance Management · Frontend Demo</footer>
+    </main>
+  </div>
+
+  <!-- ADD TRANSACTION MODAL -->
+  <div id="transactionModal" class="modal hidden">
+    <div class="modal-card">
+      <button class="modal-close" id="closeModal" aria-label="Close">×</button>
+      <h2>Add transaction</h2>
+      <p class="muted">Record income or an expense.</p>
+      <button id="modalContinue" class="primary-btn full-btn">Open transaction form</button>
+    </div>
+  </div>
+
+  <script src="script.js?v=8"></script>
+</body>
+</html>

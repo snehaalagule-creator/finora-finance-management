@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight-purple">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finora | Smart Finance Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --preview-midnight: linear-gradient(135deg, #17162a 0 48%, #9a7be8 48% 100%);
+      --preview-beige: linear-gradient(135deg, #f3eadc 0 48%, #895a38 48% 100%);
+      --preview-rose: linear-gradient(135deg, #f8e6eb 0 48%, #852642 48% 100%);
+      --lp-bg: #11101b;
+      --lp-surface: #1c1929;
+      --lp-surface-alt: #252033;
+      --lp-text: #f4efff;
+      --lp-muted: #b7aecb;
+      --lp-border: #3b344c;
+      --lp-accent: #b99aff;
+      --lp-accent-strong: #9a7be8;
+      --lp-accent-end: #c2a8ff;
+      --lp-accent-soft: #302541;
+      --lp-accent-border: #574878;
+      --lp-success: #62d6a5;
+      --lp-success-soft: #173a32;
+      --lp-expense: #ff8999;
+      --lp-expense-soft: #442630;
+      --lp-info: #9eafff;
+      --lp-info-soft: #252e4a;
+      --lp-on-accent: #ffffff;
+      --lp-nav: #11101bf2;
+      --lp-footer: #0b0a13;
+      --lp-glow: #9a7be826;
+      --lp-card-shadow: 0 30px 80px #00000052;
+      --lp-soft-shadow: 0 18px 48px #00000030;
+    }
+
+    html[data-theme="minimalist-beige"] {
+      color-scheme: light;
+      --lp-bg: #f5f0e7;
+      --lp-surface: #fffdfa;
+      --lp-surface-alt: #f8f2e9;
+      --lp-text: #35291f;
+      --lp-muted: #827568;
+      --lp-border: #e7ddd0;
+      --lp-accent: #754425;
+      --lp-accent-strong: #754425;
+      --lp-accent-end: #bd8a5d;
+      --lp-accent-soft: #efe3d5;
+      --lp-accent-border: #d7c3ad;
+      --lp-success: #257354;
+      --lp-success-soft: #e4f2e8;
+      --lp-expense: #ad4b55;
+      --lp-expense-soft: #f8e9e7;
+      --lp-info: #516e9e;
+      --lp-info-soft: #eaf0f8;
+      --lp-on-accent: #ffffff;
+      --lp-nav: #fffdfaeb;
+      --lp-footer: #3c3028;
+      --lp-glow: #bd8a5d20;
+      --lp-card-shadow: 0 30px 80px #392a1b1f;
+      --lp-soft-shadow: 0 18px 48px #392a1b14;
+    }
+
+    html[data-theme="rose-burgundy"] {
+      color-scheme: light;
+      --lp-bg: #f9edf0;
+      --lp-surface: #fffafd;
+      --lp-surface-alt: #f8e9ed;
+      --lp-text: #4b1f2c;
+      --lp-muted: #916d79;
+      --lp-border: #eed5dd;
+      --lp-accent: #8f2944;
+      --lp-accent-strong: #8f2944;
+      --lp-accent-end: #c45c78;
+      --lp-accent-soft: #f3dce4;
+      --lp-accent-border: #dfb5c2;
+      --lp-success: #287252;
+      --lp-success-soft: #e5f1e8;
+      --lp-expense: #a83e50;
+      --lp-expense-soft: #f7e3e7;
+      --lp-info: #655b98;
+      --lp-info-soft: #f0e8f4;
+      --lp-on-accent: #ffffff;
+      --lp-nav: #fffafdEB;
+      --lp-footer: #421d2b;
+      --lp-glow: #c45c7826;
+      --lp-card-shadow: 0 30px 80px #5625361f;
+      --lp-soft-shadow: 0 18px 48px #56253614;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9ff;
+      color: #18213d;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 7%;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #eceef5;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6257e8, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { color: #525b74; font-size: 14px; font-weight: 600; transition: color 0.2s; }
+    .nav-links a:hover { color: #6257e8; }
+
+    .nav-buttons { display: flex; align-items: center; gap: 10px; }
+
+    .landing-theme-switcher { position: relative; }
+
+    .landing-theme-toggle {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border: 1px solid var(--lp-border);
+      border-radius: 50%;
+      background: var(--lp-surface);
+      color: var(--lp-text);
+      font: inherit;
+      cursor: pointer;
+      transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .landing-theme-toggle:hover, .landing-theme-toggle[aria-expanded="true"] {
+      border-color: var(--lp-accent);
+      color: var(--lp-accent);
+      box-shadow: 0 0 0 3px var(--lp-accent-soft);
+      transform: translateY(-1px);
+    }
+
+    .landing-theme-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      z-index: 110;
+      width: min(230px, calc(100vw - 32px));
+      padding: 9px;
+      border: 1px solid var(--lp-border);
+      border-radius: 15px;
+      background: var(--lp-surface);
+      color: var(--lp-text);
+      box-shadow: var(--lp-soft-shadow);
+    }
+
+    .landing-theme-menu[hidden] { display: none; }
+
+    .landing-theme-menu-title {
+      padding: 5px 7px 9px;
+      color: var(--lp-muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .landing-theme-option {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      padding: 7px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--lp-text);
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .landing-theme-option:hover { background: var(--lp-surface-alt); }
+
+    .landing-theme-option[aria-pressed="true"] {
+      border-color: var(--lp-accent);
+      background: var(--lp-accent-soft);
+    }
+
+    .landing-theme-preview {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      border: 1px solid var(--lp-border);
+      border-radius: 50%;
+    }
+
+    .landing-theme-preview span { font-size: 12px; line-height: 1; }
+    .landing-preview-midnight { background: var(--preview-midnight); }
+    .landing-preview-beige { background: var(--preview-beige); }
+    .landing-preview-rose { background: var(--preview-rose); }
+
+    .landing-theme-copy { display: grid; gap: 3px; flex: 1; }
+    .landing-theme-copy strong { font-size: 12px; }
+    .landing-theme-copy small { color: var(--lp-muted); font-size: 10px; }
+    .landing-theme-check { color: var(--lp-accent); font-size: 14px; font-weight: 800; opacity: 0; }
+    .landing-theme-option[aria-pressed="true"] .landing-theme-check { opacity: 1; }
+
+    .landing-theme-status { padding: 7px; color: var(--lp-expense); font-size: 11px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-outline {
+      color: #6257e8;
+      background: transparent;
+      border: 1.5px solid #d4d1fc;
+    }
+    .btn-outline:hover { background: #f0efff; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6257e8, #8b5cf6);
+      color: white;
+      box-shadow: 0 4px 15px rgba(98,87,232,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(98,87,232,0.45);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 100px 7% 90px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 70px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(98,87,232,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #eeedff, #f3e8ff);
+      color: #6257e8;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      border: 1px solid #dddafc;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 5.5vw, 68px);
+      line-height: 1.08;
+      letter-spacing: -2.5px;
+      font-weight: 900;
+      margin-bottom: 26px;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #6257e8, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      color: #6b7490;
+      font-size: 17px;
+      line-height: 1.85;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 36px; }
+
+    .btn-lg { padding: 16px 28px; font-size: 15px; border-radius: 12px; }
+
+    .trust-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: #7c849a;
+      font-weight: 600;
+    }
+
+    .trust-item .check {
+      width: 20px;
+      height: 20px;
+      background: #e8f8f1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #15966a;
+      font-size: 11px;
+    }
+
+    /* ── PREVIEW CARD ── */
+    .preview {
+      background: white;
+      border: 1px solid #e4e5f5;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 30px 80px rgba(43,47,100,0.12);
+      position: relative;
+      z-index: 1;
+      animation: floatCard 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .preview-header h3 { font-size: 16px; font-weight: 700; }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #15966a;
+      background: #e8f8f1;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: #15966a;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .balance-card {
+      padding: 22px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #6257e8 0%, #8b5cf6 60%, #a855f7 100%);
+      color: white;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .balance-card::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .balance-card p { color: #d4d0ff; font-size: 12px; margin-bottom: 10px; font-weight: 600; }
+    .balance-card h2 { font-size: 34px; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; }
+    .balance-card small { color: #c4bfff; font-size: 11px; }
+
+    .preview-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .stat {
+      padding: 16px;
+      background: #f8f9ff;
+      border: 1px solid #eef0f8;
+      border-radius: 14px;
+    }
+
+    .stat p { color: #8a92a8; font-size: 11px; margin-bottom: 8px; font-weight: 600; }
+    .stat h3 { font-size: 19px; font-weight: 800; }
+    .income { color: #15966a; }
+    .expense { color: #e45f70; }
+
+    .tx-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; color: #3d4460; }
+
+    .tx-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px solid #f2f3f9;
+      font-size: 13px;
+    }
+
+    .tx-row:last-child { border-bottom: none; }
+
+    .tx-left { display: flex; align-items: center; gap: 10px; }
+
+    .tx-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+    }
+
+    .tx-icon.green { background: #e8f8f1; }
+    .tx-icon.red { background: #fff0f2; }
+    .tx-icon.blue { background: #eef2ff; }
+
+    .tx-name { font-weight: 600; font-size: 13px; }
+    .tx-cat { font-size: 11px; color: #9aa0b5; }
+    .tx-amount { font-weight: 800; font-size: 13px; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background: linear-gradient(135deg, #6257e8, #8b5cf6);
+      padding: 50px 7%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .strip-stat h3 {
+      font-size: 38px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .strip-stat p { color: #c4bfff; font-size: 14px; font-weight: 600; }
+
+    /* ── FEATURES ── */
+    .section { padding: 90px 7%; }
+
+    .section-label {
+      display: inline-block;
+      padding: 6px 14px;
+      background: #eeedff;
+      color: #6257e8;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .section-heading { text-align: center; max-width: 620px; margin: 0 auto 55px; }
+
+    .section-heading h2 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .section-heading p { color: #6b7490; line-height: 1.8; font-size: 16px; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid #eaebf5;
+      border-radius: 20px;
+      padding: 30px 24px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6257e8, #a855f7);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(43,47,100,0.1);
+      border-color: #d4d1fc;
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #eeedff, #f3e8ff);
+      border-radius: 16px;
+      font-size: 26px;
+      margin-bottom: 22px;
+    }
+
+    .feature-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 12px; }
+    .feature-card p { color: #6b7490; font-size: 14px; line-height: 1.8; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: white; border-top: 1px solid #eaebf5; border-bottom: 1px solid #eaebf5; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+
+    .step-num {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #6257e8, #a855f7);
+      color: white;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      font-weight: 900;
+      margin: 0 auto 20px;
+    }
+
+    .step h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+    .step p { color: #6b7490; font-size: 14px; line-height: 1.8; }
+
+    /* ── CTA ── */
+    .cta {
+      text-align: center;
+      padding: 100px 7%;
+      background: linear-gradient(135deg, #f0efff 0%, #faf5ff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(98,87,232,0.1) 0%, transparent 70%);
+    }
+
+    .cta h2 {
+      font-size: 44px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .cta p {
+      color: #6b7490;
+      margin-bottom: 36px;
+      line-height: 1.8;
+      font-size: 17px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+
+    .cta-buttons { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; position: relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 30px 7%;
+      background: #18213d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6257e8, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    footer span { color: #6b7490; font-size: 13px; }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1050px) {
+      .features { grid-template-columns: repeat(2, 1fr); }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; padding: 60px 5% 50px; gap: 50px; }
+      .steps { grid-template-columns: 1fr; gap: 30px; }
+      .navbar { padding: 16px 5%; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .features { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: 1fr 1fr; padding: 40px 5%; }
+      .section { padding: 65px 5%; }
+      .cta { padding: 70px 5%; }
+      .cta h2 { font-size: 32px; }
+      .hero h1 { letter-spacing: -1.5px; }
+      footer { flex-direction: column; text-align: center; padding: 24px 5%; }
+      .navbar { gap: 12px; }
+      .logo { font-size: 22px; white-space: nowrap; }
+      .nav-buttons { gap: 7px; }
+      .nav-buttons .btn { padding: 10px 12px; font-size: 12px; }
+      .landing-theme-menu { position: fixed; top: 70px; right: 12px; }
+    }
+
+    @media (max-width: 390px) {
+      .nav-buttons .btn-outline { display: none; }
+    }
+
+    html[data-theme] body { background: var(--lp-bg); color: var(--lp-text); transition: background-color 0.25s, color 0.25s; }
+    html[data-theme] .navbar { background: var(--lp-nav); border-color: var(--lp-border); }
+    html[data-theme] .logo, html[data-theme] .footer-logo,
+    html[data-theme] .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--lp-accent-strong), var(--lp-accent-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    html[data-theme] .nav-links a { color: var(--lp-muted); }
+    html[data-theme] .nav-links a:hover { color: var(--lp-accent); }
+    html[data-theme] .btn-outline { color: var(--lp-accent); border-color: var(--lp-accent-border); }
+    html[data-theme] .btn-outline:hover { background: var(--lp-accent-soft); }
+    html[data-theme] .btn-primary,
+    html[data-theme] .stats-strip,
+    html[data-theme] .step-num {
+      background: linear-gradient(135deg, var(--lp-accent-strong), var(--lp-accent-end));
+      color: var(--lp-on-accent);
+    }
+    html[data-theme] .btn-primary { box-shadow: 0 4px 15px var(--lp-glow); }
+    html[data-theme] .hero::before, html[data-theme] .hero::after, html[data-theme] .cta::before {
+      background: radial-gradient(circle, var(--lp-glow) 0%, transparent 70%);
+    }
+    html[data-theme] .badge, html[data-theme] .section-label {
+      background: var(--lp-accent-soft);
+      color: var(--lp-accent);
+      border-color: var(--lp-accent-border);
+    }
+    html[data-theme] .hero p, html[data-theme] .section-heading p,
+    html[data-theme] .feature-card p, html[data-theme] .step p,
+    html[data-theme] .cta p { color: var(--lp-muted); }
+    html[data-theme] .trust-item, html[data-theme] .tx-cat,
+    html[data-theme] .footer span { color: var(--lp-muted); }
+    html[data-theme] .trust-item .check, html[data-theme] .live-badge {
+      background: var(--lp-success-soft);
+      color: var(--lp-success);
+    }
+    html[data-theme] .preview, html[data-theme] .feature-card {
+      background: var(--lp-surface);
+      border-color: var(--lp-border);
+      box-shadow: var(--lp-card-shadow);
+    }
+    html[data-theme] .live-dot { background: var(--lp-success); }
+    html[data-theme] .balance-card {
+      background: linear-gradient(135deg, var(--lp-accent-strong), var(--lp-accent-end));
+      color: var(--lp-on-accent);
+    }
+    html[data-theme] .balance-card p, html[data-theme] .balance-card small,
+    html[data-theme] .strip-stat p { color: var(--lp-on-accent); opacity: 0.82; }
+    html[data-theme] .stat {
+      background: var(--lp-surface-alt);
+      border-color: var(--lp-border);
+    }
+    html[data-theme] .stat p { color: var(--lp-muted); }
+    html[data-theme] .income { color: var(--lp-success); }
+    html[data-theme] .expense { color: var(--lp-expense); }
+    html[data-theme] .tx-title { color: var(--lp-text); }
+    html[data-theme] .tx-row { border-color: var(--lp-border); }
+    html[data-theme] .tx-icon.green { background: var(--lp-success-soft); }
+    html[data-theme] .tx-icon.red { background: var(--lp-expense-soft); }
+    html[data-theme] .tx-icon.blue { background: var(--lp-info-soft); }
+    html[data-theme] .section-label { border: 0; }
+    html[data-theme] .feature-card::before { background: linear-gradient(90deg, var(--lp-accent-strong), var(--lp-accent-end)); }
+    html[data-theme] .feature-card:hover { border-color: var(--lp-accent-border); box-shadow: var(--lp-soft-shadow); }
+    html[data-theme] .feature-icon { background: var(--lp-accent-soft); }
+    html[data-theme] .how, html[data-theme] #about {
+      background: var(--lp-surface);
+      border-color: var(--lp-border);
+    }
+    html[data-theme] .cta { background: linear-gradient(135deg, var(--lp-accent-soft), var(--lp-bg)); }
+    html[data-theme] footer { background: var(--lp-footer); }
+    html[data-theme] .landing-theme-toggle, html[data-theme] .landing-theme-menu {
+      background-color: var(--lp-surface);
+      color: var(--lp-text);
+      border-color: var(--lp-border);
+    }
+
+    .hero {
+      min-height: 610px;
+      padding-top: 82px;
+      padding-bottom: 82px;
+    }
+
+    .hero h1 {
+      max-width: 650px;
+      font-size: clamp(44px, 5.2vw, 68px);
+    }
+
+    .hero p { max-width: 590px; }
+
+    .capability-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      padding: 22px 7%;
+      border-top: 1px solid var(--lp-border);
+      border-bottom: 1px solid var(--lp-border);
+      background: var(--lp-surface);
+    }
+
+    .capability-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: var(--lp-text);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .capability-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--lp-accent-soft);
+      color: var(--lp-accent);
+    }
+
+    .illustration-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border: 1px solid var(--lp-border);
+      border-radius: 999px;
+      background: var(--lp-surface-alt);
+      color: var(--lp-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .smart-section { padding-top: 88px; padding-bottom: 88px; }
+
+    .smart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .smart-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(170px, 0.9fr);
+      gap: 20px;
+      align-items: center;
+      min-width: 0;
+      padding: 30px;
+      border: 1px solid var(--lp-border);
+      border-radius: 22px;
+      background: var(--lp-surface);
+      box-shadow: var(--lp-soft-shadow);
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .smart-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--lp-accent-border);
+      box-shadow: var(--lp-card-shadow);
+    }
+
+    .smart-copy { min-width: 0; }
+
+    .smart-icon {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      margin-bottom: 18px;
+      border-radius: 14px;
+      background: var(--lp-accent-soft);
+      color: var(--lp-accent);
+    }
+
+    .smart-icon svg { width: 23px; height: 23px; }
+
+    .smart-card h3 {
+      margin: 13px 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.5px;
+    }
+
+    .smart-card p {
+      color: var(--lp-muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .smart-points {
+      display: grid;
+      gap: 9px;
+      margin-top: 17px;
+      list-style: none;
+    }
+
+    .smart-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--lp-text);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .smart-points li::before {
+      content: "✓";
+      display: grid;
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--lp-success-soft);
+      color: var(--lp-success);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .receipt-illustration, .voice-illustration {
+      position: relative;
+      display: grid;
+      min-height: 250px;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--lp-border);
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 20% 20%, var(--lp-glow), transparent 50%),
+        var(--lp-surface-alt);
+    }
+
+    .receipt-paper {
+      position: relative;
+      width: 150px;
+      padding: 20px 16px 22px;
+      border: 1px solid var(--lp-border);
+      border-radius: 9px;
+      background: var(--lp-surface);
+      box-shadow: var(--lp-soft-shadow);
+      transform: rotate(-4deg);
+    }
+
+    .receipt-paper::after {
+      position: absolute;
+      right: 0;
+      bottom: -7px;
+      left: 0;
+      height: 8px;
+      background: linear-gradient(135deg, var(--lp-surface) 50%, transparent 50%) 0 0 / 12px 12px repeat-x;
+      content: "";
+    }
+
+    .receipt-brand {
+      margin-bottom: 14px;
+      color: var(--lp-text);
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .receipt-line {
+      height: 5px;
+      margin: 8px 0;
+      border-radius: 5px;
+      background: var(--lp-border);
+    }
+
+    .receipt-line.short { width: 58%; }
+    .receipt-line.medium { width: 78%; }
+
+    .receipt-total {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      margin-top: 13px;
+      padding-top: 9px;
+      border-top: 1px dashed var(--lp-border);
+      color: var(--lp-accent);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .receipt-review-chip {
+      position: absolute;
+      right: 9px;
+      bottom: 17px;
+      max-width: 128px;
+      padding: 9px 11px;
+      border: 1px solid var(--lp-border);
+      border-radius: 12px;
+      background: var(--lp-surface);
+      color: var(--lp-success);
+      box-shadow: var(--lp-soft-shadow);
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .voice-orb {
+      display: grid;
+      width: 78px;
+      height: 78px;
+      place-items: center;
+      border: 1px solid var(--lp-accent-border);
+      border-radius: 50%;
+      background: var(--lp-accent-soft);
+      color: var(--lp-accent);
+      box-shadow: 0 0 0 12px var(--lp-glow);
+    }
+
+    .voice-orb svg { width: 32px; height: 32px; }
+
+    .voice-wave {
+      position: absolute;
+      top: 50%;
+      right: 12%;
+      left: 12%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 74px;
+      transform: translateY(-50%);
+      opacity: 0.5;
+    }
+
+    .voice-wave span {
+      width: 4px;
+      height: var(--bar-height, 18px);
+      border-radius: 5px;
+      background: var(--lp-accent);
+    }
+
+    .voice-example {
+      position: absolute;
+      right: 12px;
+      bottom: 14px;
+      left: 12px;
+      padding: 11px 12px;
+      border: 1px solid var(--lp-border);
+      border-radius: 12px;
+      background: var(--lp-surface);
+      color: var(--lp-text);
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .voice-example small {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--lp-muted);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .section-heading, #finance-features, #contact { scroll-margin-top: 100px; }
+
+    .feature-card { min-height: 220px; }
+
+    .step {
+      padding: 26px 20px;
+      border: 1px solid var(--lp-border);
+      border-radius: 18px;
+      background: var(--lp-surface);
+    }
+
+    .steps { align-items: stretch; }
+
+    .step-num { box-shadow: 0 10px 24px var(--lp-glow); }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 34px;
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .footer-brand { max-width: 300px; }
+    .footer-brand p { margin-top: 13px; color: var(--lp-muted); font-size: 13px; line-height: 1.75; }
+    .footer-column h3 { margin: 5px 0 15px; color: var(--lp-text); font-size: 12px; }
+    .footer-column a, .footer-column p { display: block; margin: 10px 0; color: var(--lp-muted); font-size: 12px; line-height: 1.65; }
+    .footer-column a:hover { color: var(--lp-accent); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      width: 100%;
+      max-width: 1240px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--lp-border);
+      color: var(--lp-muted);
+      font-size: 11px;
+    }
+
+    @media (max-width: 1050px) {
+      .smart-grid { grid-template-columns: 1fr; }
+      .smart-card { grid-template-columns: minmax(0, 1fr) minmax(200px, 0.8fr); }
+      .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 600px) {
+      .hero { min-height: auto; padding-top: 54px; }
+      .capability-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 18px 5%; }
+      .capability-item { justify-content: flex-start; font-size: 11px; }
+      .smart-section { padding-top: 62px; padding-bottom: 62px; }
+      .smart-card { grid-template-columns: 1fr; padding: 23px; }
+      .receipt-illustration, .voice-illustration { min-height: 220px; }
+      .feature-card { min-height: 0; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 22px; text-align: left; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+      .step { padding: 22px 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="/" class="logo">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="vertical-align:middle;margin-right:6px">
+        <rect width="32" height="32" rx="10" fill="url(#finora-mark-landing-nav)"/>
+        <circle cx="16" cy="16" r="12.5" stroke="var(--lp-on-accent)" stroke-opacity=".28"/>
+        <path d="M10 22V10h12M10 15.5h8" stroke="var(--lp-on-accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="m14 21 4-4 3 2 4-6m-3 0h3v3" stroke="var(--lp-on-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="finora-mark-landing-nav" x1="3" y1="2" x2="29" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="var(--lp-accent-strong)"/><stop offset="1" stop-color="var(--lp-accent-end)"/></linearGradient></defs>
+      </svg>
+      Finora
+    </a>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+    </nav>
+    <div class="nav-buttons">
+      <div class="landing-theme-switcher">
+        <button id="landingThemeToggle" class="landing-theme-toggle" type="button" aria-label="Change Theme" title="Change Theme" aria-haspopup="true" aria-expanded="false" aria-controls="landingThemeMenu">
+          <span aria-hidden="true">🌙</span>
+        </button>
+        <div id="landingThemeMenu" class="landing-theme-menu" role="group" aria-labelledby="landingThemeToggle" hidden>
+          <p class="landing-theme-menu-title">Choose your theme</p>
+          <button class="landing-theme-option" type="button" data-landing-theme="midnight-purple" aria-pressed="false">
+            <span class="landing-theme-preview landing-preview-midnight" aria-hidden="true"><span>🌙</span></span>
+            <span class="landing-theme-copy"><strong>Midnight Purple</strong></span><span class="landing-theme-check" aria-hidden="true">✓</span>
+          </button>
+          <button class="landing-theme-option" type="button" data-landing-theme="minimalist-beige" aria-pressed="false">
+            <span class="landing-theme-preview landing-preview-beige" aria-hidden="true"><span>☀️</span></span>
+            <span class="landing-theme-copy"><strong>Minimalist Beige</strong></span><span class="landing-theme-check" aria-hidden="true">✓</span>
+          </button>
+          <button class="landing-theme-option" type="button" data-landing-theme="rose-burgundy" aria-pressed="false">
+            <span class="landing-theme-preview landing-preview-rose" aria-hidden="true"><span>🌹</span></span>
+            <span class="landing-theme-copy"><strong>Rose &amp; Burgundy</strong></span><span class="landing-theme-check" aria-hidden="true">✓</span>
+          </button>
+          <p id="landingThemeStatus" class="landing-theme-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+      <a href="/index.html?auth=login" class="btn btn-outline">Login</a>
+      <a href="/index.html?auth=signup" class="btn btn-primary">Get Started →</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="badge">✦ A clearer way to manage your money</span>
+
+        <h1>
+          Manage Your Money.<br>
+          <span class="highlight">The Smarter Way.</span>
+        </h1>
+
+        <p>
+          Track expenses, manage budgets, scan receipts, and add transactions using your voice — all in one simple finance management platform.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="/index.html?auth=signup" class="btn btn-primary btn-lg">
+            Get Started →
+          </a>
+          <a href="#features" class="btn btn-outline btn-lg">
+            Explore Features
+          </a>
+        </div>
+
+        <div class="trust-row">
+          <div class="trust-item">
+            <span class="check">✓</span> Free to use
+          </div>
+          <div class="trust-item">
+            <span class="check">✓</span> Secure & private
+          </div>
+          <div class="trust-item">
+            <span class="check">✓</span> Real-time data
+          </div>
+        </div>
+      </div>
+
+      <!-- PREVIEW CARD -->
+      <div class="preview" aria-label="Illustrative Finora dashboard preview">
+        <div class="preview-header">
+          <h3>Financial Overview</h3>
+          <span class="illustration-label">Illustrative preview</span>
+        </div>
+
+        <div class="balance-card">
+          <p>Total Balance</p>
+          <h2>₹45,250</h2>
+          <small>↑ +12.4% from last month</small>
+        </div>
+
+        <div class="preview-stats">
+          <div class="stat">
+            <p>↗ Income</p>
+            <h3 class="income">₹60,000</h3>
+          </div>
+          <div class="stat">
+            <p>↘ Expenses</p>
+            <h3 class="expense">₹14,750</h3>
+          </div>
+        </div>
+
+        <p class="tx-title">Recent Transactions</p>
+
+        <div class="tx-row">
+          <div class="tx-left">
+            <div class="tx-icon green">💼</div>
+            <div>
+              <div class="tx-name">Monthly Salary</div>
+              <div class="tx-cat">Income</div>
+            </div>
+          </div>
+          <span class="tx-amount income">+₹40,000</span>
+        </div>
+
+        <div class="tx-row">
+          <div class="tx-left">
+            <div class="tx-icon red">🛒</div>
+            <div>
+              <div class="tx-name">Grocery Shopping</div>
+              <div class="tx-cat">Food</div>
+            </div>
+          </div>
+          <span class="tx-amount expense">−₹2,500</span>
+        </div>
+
+        <div class="tx-row">
+          <div class="tx-left">
+            <div class="tx-icon blue">🏠</div>
+            <div>
+              <div class="tx-name">House Rent</div>
+              <div class="tx-cat">Bills</div>
+            </div>
+          </div>
+          <span class="tx-amount expense">−₹10,000</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="capability-strip" aria-label="Ways to manage transactions">
+      <div class="capability-item"><span class="capability-icon" aria-hidden="true">＋</span>Manual entry</div>
+      <div class="capability-item"><span class="capability-icon" aria-hidden="true">▤</span>Receipt OCR</div>
+      <div class="capability-item"><span class="capability-icon" aria-hidden="true">⌁</span>Voice entry</div>
+      <div class="capability-item"><span class="capability-icon" aria-hidden="true">✓</span>Review before saving</div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="section smart-section" id="features">
+      <div class="section-heading fade-up">
+        <span class="section-label">Smarter transaction entry</span>
+        <h2>Less typing. You stay in control.</h2>
+        <p>Choose a receipt, speak naturally, or enter details yourself. Review the information before you save.</p>
+      </div>
+
+      <div class="smart-grid">
+        <article class="smart-card fade-up">
+          <div class="smart-copy">
+            <span class="smart-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 13h8M8 17h5M8 9h2"/></svg>
+            </span>
+            <span class="illustration-label">Receipt OCR</span>
+            <h3>Scan Receipt</h3>
+            <p>Upload a receipt image and let OCR read the text to help prepare an expense transaction.</p>
+            <ul class="smart-points">
+              <li>Extracts a suggested amount, description, and category where recognized.</li>
+              <li>Review and correct the transaction details before saving.</li>
+              <li>Spend less time typing routine purchase details.</li>
+            </ul>
+          </div>
+          <div class="receipt-illustration" aria-label="Illustration of a receipt with details ready for review" role="img">
+            <div class="receipt-paper" aria-hidden="true">
+              <div class="receipt-brand">FINORA · RECEIPT</div>
+              <div class="receipt-line"></div><div class="receipt-line medium"></div>
+              <div class="receipt-line short"></div><div class="receipt-line"></div>
+              <div class="receipt-line medium"></div>
+              <div class="receipt-total"><span>TOTAL</span><span>Review</span></div>
+            </div>
+            <div class="receipt-review-chip">✓ Details ready for your review</div>
+          </div>
+        </article>
+
+        <article class="smart-card fade-up">
+          <div class="smart-copy">
+            <span class="smart-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
+            </span>
+            <span class="illustration-label">Speech recognition</span>
+            <h3>Voice Entry</h3>
+            <p>Say an expense or income naturally, then check the recognized transaction before you confirm it.</p>
+            <ul class="smart-points">
+              <li>Recognizes transaction details such as amount, category, date, and type where available.</li>
+              <li>Edit the recognized fields and confirm before the transaction is saved.</li>
+              <li>Example: “I spent ₹150 on groceries today.”</li>
+            </ul>
+          </div>
+          <div class="voice-illustration" aria-label="Illustration of a microphone and voice waveform" role="img">
+            <div class="voice-wave" aria-hidden="true">
+              <span style="--bar-height:14px"></span><span style="--bar-height:27px"></span><span style="--bar-height:40px"></span><span style="--bar-height:22px"></span><span style="--bar-height:54px"></span><span style="--bar-height:32px"></span><span style="--bar-height:44px"></span><span style="--bar-height:20px"></span><span style="--bar-height:36px"></span><span style="--bar-height:16px"></span>
+            </div>
+            <div class="voice-orb" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
+            </div>
+            <div class="voice-example"><small>Example phrase</small>“I spent ₹150 on groceries today.”</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="finance-features">
+      <div class="section-heading fade-up">
+        <span class="section-label">Your money, organized</span>
+        <h2>Everything you need to see the bigger picture</h2>
+        <p>Keep day-to-day activity and long-term plans together in one finance workspace.</p>
+      </div>
+
+      <div class="features">
+        <article class="feature-card fade-up">
+          <div class="feature-icon">📊</div>
+          <h3>Personal Finance Dashboard</h3>
+          <p>See your balance, income, expenses, and savings rate together at a glance.</p>
+        </article>
+        <article class="feature-card fade-up">
+          <div class="feature-icon">↗</div>
+          <h3>Income and Expense Tracking</h3>
+          <p>Record and categorize money coming in and going out, with manual, receipt, and voice entry options.</p>
+        </article>
+        <article class="feature-card fade-up">
+          <div class="feature-icon">◷</div>
+          <h3>Budget Management</h3>
+          <p>Set monthly limits by category and see how your spending compares with your budget.</p>
+        </article>
+        <article class="feature-card fade-up">
+          <div class="feature-icon">🎯</div>
+          <h3>Savings Goals</h3>
+          <p>Set a savings target, record progress, and keep your goals visible.</p>
+        </article>
+        <article class="feature-card fade-up">
+          <div class="feature-icon">▥</div>
+          <h3>Financial Reports and Insights</h3>
+          <p>Review income, expenses, savings, and category breakdowns in clear summaries and charts.</p>
+        </article>
+        <article class="feature-card fade-up">
+          <div class="feature-icon">⇄</div>
+          <h3>Transaction History</h3>
+          <p>Search and filter your recorded transactions, and export your activity as a CSV file.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section how" id="how">
+      <div class="section-heading fade-up">
+        <span class="section-label">How it works</span>
+        <h2>A simple flow, with you in control</h2>
+        <p>Choose how to add transactions, then use your own records to follow your finances.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step fade-up">
+          <div class="step-num">1</div>
+          <h3>Create your account</h3>
+          <p>Sign up, then open your personal finance dashboard.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">2</div>
+          <h3>Choose how to add a transaction</h3>
+          <p>Enter it manually, scan a receipt, or use voice entry. Review the details before saving.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">3</div>
+          <h3>Track your finances</h3>
+          <p>Keep an eye on spending, budgets, savings goals, and reports in one place.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="vertical-align:middle;margin-right:5px">
+            <rect width="32" height="32" rx="10" fill="url(#finora-mark-landing-footer)"/>
+            <circle cx="16" cy="16" r="12.5" stroke="var(--lp-on-accent)" stroke-opacity=".28"/>
+            <path d="M10 22V10h12M10 15.5h8" stroke="var(--lp-on-accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="m14 21 4-4 3 2 4-6m-3 0h3v3" stroke="var(--lp-on-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs><linearGradient id="finora-mark-landing-footer" x1="3" y1="2" x2="29" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="var(--lp-accent-strong)"/><stop offset="1" stop-color="var(--lp-accent-end)"/></linearGradient></defs>
+          </svg>
+          Finora
+        </a>
+        <p>A simpler place to record transactions, follow budgets, and keep your financial goals in view.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Features</h3>
+        <a href="#features">Receipt scanning</a>
+        <a href="#features">Voice entry</a>
+        <a href="#finance-features">Dashboard &amp; reports</a>
+        <a href="#finance-features">Budgets &amp; savings goals</a>
+      </div>
+      <div class="footer-column">
+        <h3>About Finora</h3>
+        <a href="#features">Our platform</a>
+        <a href="#how">How it works</a>
+        <a href="/index.html?auth=signup">Create an account</a>
+        <a href="/index.html?auth=login">Sign in</a>
+      </div>
+      <div class="footer-column" id="contact">
+        <h3>Contact &amp; feedback</h3>
+        <p>Have a question or suggestion? Visit the Finora project page to share feedback.</p>
+        <a href="https://github.com/sneha123/finora-finance-management/issues" target="_blank" rel="noopener noreferrer">Visit the project feedback page ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Finora. All rights reserved.</span>
+      <span>Personal Finance Management Platform</span>
+    </div>
+  </footer>
+
+  <script>
+    const landingThemes = new Set(["midnight-purple", "minimalist-beige", "rose-burgundy"]);
+    const landingThemeToggle = document.getElementById("landingThemeToggle");
+    const landingThemeMenu = document.getElementById("landingThemeMenu");
+    const landingThemeStatus = document.getElementById("landingThemeStatus");
+
+    function applyLandingTheme(theme) {
+      const selectedTheme = landingThemes.has(theme) ? theme : "midnight-purple";
+      document.documentElement.dataset.theme = selectedTheme;
+      document.querySelectorAll("[data-landing-theme]").forEach((option) => {
+        option.setAttribute("aria-pressed", String(option.dataset.landingTheme === selectedTheme));
+      });
+    }
+
+    let savedLandingTheme = "midnight-purple";
+    try {
+      const savedTheme = localStorage.getItem("finora_theme");
+      if (savedTheme && landingThemes.has(savedTheme)) {
+        savedLandingTheme = savedTheme;
+      } else {
+        localStorage.setItem("finora_theme", savedLandingTheme);
+      }
+    } catch (error) {
+      console.warn("Could not load or save the landing page theme preference.", error);
+    }
+    applyLandingTheme(savedLandingTheme);
+
+    function closeLandingThemeMenu() {
+      landingThemeMenu.hidden = true;
+      landingThemeToggle.setAttribute("aria-expanded", "false");
+    }
+
+    landingThemeToggle.addEventListener("click", () => {
+      const isOpening = landingThemeMenu.hidden;
+      landingThemeMenu.hidden = !isOpening;
+      landingThemeToggle.setAttribute("aria-expanded", String(isOpening));
+      if (isOpening) landingThemeMenu.querySelector('[aria-pressed="true"]').focus();
+    });
+
+    landingThemeMenu.addEventListener("click", (event) => {
+      const option = event.target.closest("[data-landing-theme]");
+      if (!option) return;
+      const theme = option.dataset.landingTheme;
+      if (!landingThemes.has(theme)) return;
+      try {
+        localStorage.setItem("finora_theme", theme);
+        landingThemeStatus.textContent = "";
+      } catch (error) {
+        console.error("Could not save the selected landing page theme.", error);
+        landingThemeStatus.textContent = "Theme applied, but your choice could not be saved in this browser.";
+      }
+      applyLandingTheme(theme);
+      closeLandingThemeMenu();
+      landingThemeToggle.focus();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".landing-theme-switcher")) closeLandingThemeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !landingThemeMenu.hidden) {
+        closeLandingThemeMenu();
+        landingThemeToggle.focus();
+      }
+    });
+
+    // Fade-up animation on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+  </script>
+
+</body>
+</html>
