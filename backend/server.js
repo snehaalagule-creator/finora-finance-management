@@ -4,7 +4,6 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const { exec } = require("child_process");
 const connectDB = require("./config/db");
 
 const app = express();
@@ -53,8 +52,7 @@ async function startServer() {
   try {
     await connectDB();
     app.listen(PORT, () => {
-      console.log(`App running at http://localhost:${PORT}`);
-      exec(`start http://localhost:${PORT}`);
+      console.log(`App running on port ${PORT}`);
     });
   } catch (err) {
     console.error("Could not start backend:", err.message);
